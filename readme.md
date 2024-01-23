@@ -7,7 +7,7 @@ os logs de uma aplicação que não popula o sysout de uma vm no Compute engine.
 A aplicação usa a porta 5000, se houver firewall, é necessário permitir esta porta.
 
 - Instalação
-> bash install.sh
+> git clone https://github.com/AleixoLucas42/poc-gce-logging-router.git /opt/poc-gce-logging-router && bash install.sh
 
 - Reiniciar o daemon
 > sudo systemctl daemon-reload
@@ -19,4 +19,4 @@ A aplicação usa a porta 5000, se houver firewall, é necessário permitir esta
 > sudo systemctl enable poc-gce-logging-router
 
 ## Testar
-Para testar basta dar um GET no endereço do servidor na porta 5000, depois dar um cat no arquivo 
+Para testar basta dar um GET no endereço do servidor na porta 5000, depois dar um cat no arquivo `/var/log/poc-gce-logging-router.log`
