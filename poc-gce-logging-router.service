@@ -3,7 +3,7 @@ Description=poc-gce-logging-router
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/python /opt/poc-gce-logging-router/main.py
+ExecStart=/opt/poc-gce-logging-router/main
 WorkingDirectory=/opt/poc-gce-logging-router/
 Restart=always
 

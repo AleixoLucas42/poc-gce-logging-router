@@ -5,8 +5,9 @@ rm -rf /opt/poc-gce-logging-router
 
 #Download repo
 git clone \
-    git@bitbucket.org:pernamlabs/poc-gce-logging-router.git \
+    git@github.com:AleixoLucas42/poc-gce-logging-router.git \
         /opt/poc-gce-logging-router
+wget https://github.com/AleixoLucas42/poc-gce-logging-router/releases/download/RELEASE-v1.0/main -P /opt/poc-gce-logging-router
 
 #Criar arquivo de log
 touch /var/log/poc-gce-logging-router.log &&\
