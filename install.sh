@@ -13,9 +13,6 @@ wget https://github.com/AleixoLucas42/poc-gce-logging-router/releases/download/R
 touch /var/log/poc-gce-logging-router.log &&\
     chmod 777 /var/log/poc-gce-logging-router.log
 
-#Instalação de dependencias
-pip3 install -r /opt/poc-gce-logging-router/requirements.txt
-
 #Criar arquivo de serviço
 rm -rf /etc/systemd/system/poc-gce-logging-router.service
 ln -s /opt/poc-gce-logging-router/poc-gce-logging-router.service /etc/systemd/system/poc-gce-logging-router.service

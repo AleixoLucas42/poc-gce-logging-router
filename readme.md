@@ -18,3 +18,5 @@ A aplicação usa a porta 5000, se houver firewall, é necessário permitir esta
 - Habilitar na inicialização
 > sudo systemctl enable poc-gce-logging-router
 
+## Testar
+Para testar basta dar um GET no endereço do servidor na porta 5000, depois dar um cat no arquivo 
