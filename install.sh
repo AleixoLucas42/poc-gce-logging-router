@@ -11,6 +11,7 @@ wget https://github.com/AleixoLucas42/poc-gce-logging-router/releases/download/R
 chmod 777 /opt/poc-gce-logging-router/main
 
 #Criar arquivo de log
+rm -rf /var/log/poc-gce-logging-router.log
 touch /var/log/poc-gce-logging-router.log &&\
     chmod 777 /var/log/poc-gce-logging-router.log
 
