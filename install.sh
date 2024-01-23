@@ -1,13 +1,14 @@
 #/bin/bash
 
-#Delete app folder
+#Delete app
 rm -rf /opt/poc-gce-logging-router
+systemctl stop poc-gce-logging-router
+systemctl disable poc-gce-logging-route
 
 #Download repo
-git clone \
-    git@github.com:AleixoLucas42/poc-gce-logging-router.git \
-        /opt/poc-gce-logging-router
+git clone https://github.com/AleixoLucas42/poc-gce-logging-router.git /opt/poc-gce-logging-router
 wget https://github.com/AleixoLucas42/poc-gce-logging-router/releases/download/RELEASE-v1.0/main -P /opt/poc-gce-logging-router
+chmod 777 /opt/poc-gce-logging-router/main
 
 #Criar arquivo de log
 touch /var/log/poc-gce-logging-router.log &&\
