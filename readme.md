@@ -1,38 +1,37 @@
-# Roteamento de logs para o cloud logging do GCP
-Este repositório se destina à prova de conceito para redirecionar
-os logs de uma aplicação para o cloud logging do GCP usando o ops-agent do google.
+# Log routing from compute engine file to GCP cloud logging
+This repository is intended as a proof of concept for redirecting
+an application's logs to GCP cloud logging using Google's ops-agent.
 
-
-## Criação do compute engine
+## Creation of the compute engine
 > cd terraform && terraform init
 
 > terraform plan
 
 > terraform apply
 
-## Instalação da aplicação de teste
-A aplicação usa a porta 5000, se houver firewall, é necessário permitir esta porta.
+## Installing the test application
+The application uses port 5000, if there is a firewall, this port must be allowed.
 
-- Conectar na vm via ssh e executar:
+- Connect to the vm via ssh and run:
 > git clone https://github.com/AleixoLucas42/poc-gce-logging-router.git
 
 > sudo bash poc-gce-logging-router/install.sh
 
-## Testar
-- Enviar uma requisição GET no endereço do servidor, interno ou externo, deverá retornar: `Populating /var/log/poc-gce-logging-router.log`
+## Testing
+- Sending a GET request to the server address:port, internal or external, should return: `Populating /var/log/poc-gce-logging-router.log`
 > curl 127.0.0.1:5000/
-- (Opcional) verificar o arquivo `/var/log/poc-gce-logging-router.log` se está sendo populado:
+- (Optional) check the file `/var/log/poc-gce-logging-router.log` if it is being populated:
 > cat /var/log/poc-gce-logging-router.log
-- Se não estiver funcionando, pode se verificar o log com o comando:
+- If it is not working, you can check the log with the command:
 > journalctl -u poc-gce-logging-router.service
 
-## Configurar o ops-agent para coletar logs personalizados
-- Primeiro passo é necessário garantir que esteja instalado o agente de monitoramento do google ops-agent; se não foi usado o terraform para criar a maquina,
-é necessário instalar; para instalar, basta ir na aba de observabilidade da maquina em questão no proprio compute engine e lá vão aparecer algumas metricas,
-porém outras não, e o google irá recomendar a instalação do agente, para instalar é só um botão na interface e aguardar de 1-2 minutos. Se houver problemas para encontrar o instalador na interface, esta [documentação](https://cloud.google.com/monitoring/agent/ops-agent/install-index) pode ajudar.
+## Configure ops-agent to collect custom logs
+- The first step is to ensure that the google ops-agent monitoring agent is installed; if terraform was not used to create the machine,
+it is necessary to install. To install, just go to the observability tab of the machine in question on compute engine itself and some metrics will appear there,
+however, others do not, and Google will recommend installing the agent. To install, just press a button on the interface and wait 1-2 minutes. If you have trouble finding the installer in the interface, this [documentation](https://cloud.google.com/monitoring/agent/ops-agent/install-index) may help.
 
-- Depois de instalado é necessário configurar um arquivo do agente conforme a [documentação](https://cloud.google.com/logging/docs/agent/ops-agent/configuration?hl=pt-br);
-Para nosso cenário ficará assim:
+- Once installed, it is necessary to configure an agent file according to [documentation](https://cloud.google.com/logging/docs/agent/ops-agent/configuration?hl=pt-br);
+For our scenario it will look like this:
 ```yaml
 logging:
   receivers:
@@ -65,15 +64,15 @@ metrics:
         processors: [metrics_filter]
 ```
 
-- Agora precisaremos reiniciar o agente
+- Now we will need to restart the agent
 >  sudo systemctl restart google-cloud-ops-agent"*"
 
-- Após isso, precisaremos acessar os logs da VM no `logging explorer` (pode demorar 1-2 minutos até o log aparecer na interface) se precisar, pode se basear na query:
+- After that, we check VM logs in the `logging explorer` (it may take 1-2 minutes for the log to appear in the interface) if necessary, you can use the query:
 > resource.type="gce_instance" resource.labels.instance_id="{INSTANCE_ID}" log_name="projects/{PROJECT_ID}/logs/poc-gce-logging-router"
 
-## Conclusão
-O agente de monitoramento padrão do google nos permite indexar no cloud logging, com isso nos da possibilidade de automatizar varias coisas no console do GCP.
+## Conclusion
+Google's standard monitoring agent allows us to index custom log files in cloud logging, which gives us the possibility of automating several things in the GCP console.
 
-### Referencias:
-- [Instalação do agente](https://cloud.google.com/monitoring/agent/ops-agent/install-index)
-- [Documentação do agente](https://cloud.google.com/logging/docs/agent/ops-agent/configuration?hl=pt-br#logging-receivers)
+### References:
+- [Agent installation](https://cloud.google.com/monitoring/agent/ops-agent/install-index)
+- [Agent documentation](https://cloud.google.com/logging/docs/agent/ops-agent/configuration?hl=pt-br#logging-receivers)
