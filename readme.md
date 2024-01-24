@@ -31,7 +31,7 @@ it is necessary to install. To install, just go to the observability tab of the 
 however, others do not, and Google will recommend installing the agent. To install, just press a button on the interface and wait 1-2 minutes. If you have trouble finding the installer in the interface, this [documentation](https://cloud.google.com/monitoring/agent/ops-agent/install-index) may help.
 
 - Once installed, it is necessary to configure an agent file according to [documentation](https://cloud.google.com/logging/docs/agent/ops-agent/configuration?hl=pt-br);
-For our scenario (`/etc/google-cloud-ops-agent/config.yaml`) it will look like this:
+For our scenario (`/etc/google-cloud-ops-agent/config.yaml`) it should look like this:
 ```yaml
 logging:
   receivers:
